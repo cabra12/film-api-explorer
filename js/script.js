@@ -62,6 +62,63 @@ const displayPopularTVShows = async () => {
     });
 };
 
+const displayMovieDetails = async () => {
+    const movieId = window.location.search.split('=')[1];
+    //window.location.search only gives back the query, which will be something like ?id=1234
+    //split will make an array based on the symbol, so ['?id', '1234']
+
+    const movie = await fetchAPIData(`movie/${movieId}`);
+    console.log(movie);
+
+    const div = document.createElement('div');
+    div.innerHTML = 
+    `<div class="details-top">
+        <div>
+            ${movie.poster_path 
+                ? `<img
+              src="https://image.tmdb.org/t/p/w500${movie.poster_path}"
+              class="${movie.title} poster"
+              alt="Movie Title"
+            />` : `<img
+              src="images/no-image.jpg"
+              class="card-img-top"
+              alt="Movie Title"
+            />` }
+          </div>
+          <div>
+            <h2>${movie.title}</h2>
+            <p>
+              <i class="fas fa-star text-primary"></i>
+              ${movie.vote_average.toFixed(1)} / 10
+            </p>
+            <p class="text-muted">Release Date: ${movie.release_date}</p>
+            <p>
+              ${movie.overview}
+            </p>
+            <h5>Genres</h5>
+            <ul class="list-group">
+              ${movie.genres.map((genre) => `<li>${genre.name}</li>`).join('')}
+            </ul>
+            <a href="${movie.homepage}" target="_blank" class="btn">Visit Movie Homepage</a>
+          </div>
+    </div>
+        <div class="details-bottom">
+          <h2>Movie Info</h2>
+          <ul>
+            <li><span class="text-secondary">Budget:</span> ${movie.budget ? `$${addCommasToNumber(movie.budget)}` : 'Unknown'}</li>
+            <li><span class="text-secondary">Revenue:</span> ${movie.revenue ? `$${addCommasToNumber(movie.revenue)}` : 'Unknown'}</li>
+            <li><span class="text-secondary">Runtime:</span> ${movie.runtime} minutes</li>
+            <li><span class="text-secondary">Status:</span> ${movie.status}</li>
+          </ul>
+          <h4>Production Companies</h4>
+          <div class="list-group">${movie.production_companies.map((company) => company.name).join(', ')}</div>
+        </div>
+    </div>
+    `;
+
+    document.querySelector('#movie-details').appendChild(div);
+};
+
 const fetchAPIData = async (endpoint) => {
     const API_URL = 'https://api.themoviedb.org/3/';
 
@@ -99,20 +156,24 @@ const highlightActiveLink = () => {
     });
 };
 
+const addCommasToNumber = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 
 //Initialize App
 
 const init = () => {
     switch(global.currentPage) {
         case '/':
-        case 'index.html':
+        case '/index.html':
             displayPopularMovies();
             break;
         case '/shows.html':
             displayPopularTVShows();
             break;
         case '/movie-details.html':
-            console.log('Movie Details');
+            displayMovieDetails();
             break;
         case '/tv-details.html':
             console.log('TV Details');
