@@ -68,7 +68,8 @@ const displayMovieDetails = async () => {
     //split will make an array based on the symbol, so ['?id', '1234']
 
     const movie = await fetchAPIData(`movie/${movieId}`);
-    console.log(movie);
+    
+    displayBackgroundImage('movie', movie.backdrop_path);
 
     const div = document.createElement('div');
     div.innerHTML = 
@@ -117,6 +118,28 @@ const displayMovieDetails = async () => {
     `;
 
     document.querySelector('#movie-details').appendChild(div);
+};
+
+const displayBackgroundImage = async (type, backgroundPath) => {
+    const overlayDiv = document.createElement('div');
+    overlayDiv.style.backgroundImage = `url(https://image.tmdb.org/t/p/original/${backgroundPath})`;
+    overlayDiv.style.backgroundSize = 'cover';
+    overlayDiv.style.backgroundPosition = 'center';
+    overlayDiv.style.backgroundRepeat = 'no-repeat';
+    overlayDiv.style.height = '100vh';
+    overlayDiv.style.width = '100vw';
+    overlayDiv.style.position = 'absolute';
+    overlayDiv.style.top = '0';
+    overlayDiv.style.left = '0';
+    overlayDiv.style.zIndex = '-1';
+    overlayDiv.style.opacity = '0.1';
+
+    if(type === 'movie') {
+        document.querySelector('#movie-details').appendChild(overlayDiv);
+    }else {
+        document.querySelector('#show-details').appendChild(overlayDiv);
+    }
+
 };
 
 const fetchAPIData = async (endpoint) => {
