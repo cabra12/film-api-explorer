@@ -2,6 +2,53 @@ const global = {
     currentPage: window.location.pathname,
 };
 
+const displaySlider = async () => {
+    const { results } = await fetchAPIData('movie/now_playing');
+
+    results.forEach((movie) => {
+        const div = document.createElement('div');
+        div.classList.add('swiper-slide');
+
+        div.innerHTML = `
+            <a href="movie-details.html?id=${movie.id}">
+              <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title} Title" />
+            </a>
+            <h4 class="swiper-rating">
+              <i class="fas fa-star text-secondary"></i> ${movie.vote_average.toFixed(1)} / 10
+            </h4>
+        `;
+
+        document.querySelector('.swiper-wrapper').appendChild(div);
+
+        initSwiper();
+    });
+};
+
+const initSwiper = () => {
+    const swiper = new Swiper('.swiper', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        freeMode: true,
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        breakpoints: {
+            500: {
+                slidesPerView: 2
+            },
+            700: {
+                slidesPerView: 3
+            },
+            1200: {
+                slidesPerView: 4
+            },
+        }
+    });
+};
+
 const displayPopularMovies = async () => {
     const { results } = await fetchAPIData('movie/popular');
     //destructuring the object like this just gives us the results, one of the things this API returns
@@ -247,6 +294,7 @@ const init = () => {
     switch(global.currentPage) {
         case '/':
         case '/index.html':
+            displaySlider();
             displayPopularMovies();
             break;
         case '/shows.html':
