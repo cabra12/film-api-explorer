@@ -429,19 +429,24 @@ const init = () => {
     switch(global.currentPage) {
         case '/':
         case '/index.html':
+        case '/index':
             displaySlider();
             displayPopularMovies();
             break;
         case '/shows.html':
+        case '/shows':
             displayPopularTVShows();
             break;
         case '/movie-details.html':
+        case '/movie-details':
             displayMovieDetails();
             break;
         case '/tv-details.html':
+        case '/tv-details':
             displayTVShowDetails();
             break;
         case '/search.html':
+        case '/search':
             search();
             break;
     }
