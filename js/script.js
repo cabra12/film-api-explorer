@@ -373,21 +373,7 @@ const fetchAPIData = async (endpoint) => {
 };
 
 const searchAPIData = async () => {
-    const API_URL = 'https://api.themoviedb.org/3/';
-
-    showSpinner();
-    const response = await fetch(`${API_URL}search/${global.search.type}?query=${global.search.term}&page=${global.search.page}`, {
-        headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNWMxZTU4ZTFjZmQ1MDlkYTg1MmI0NGYzYzk0ODFkOCIsIm5iZiI6MTc3NDM2NDU0OC4yOTMsInN1YiI6IjY5YzJhNzg0ODBlMmIyYjU1ZTdiY2JjYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IcDZIwltA6O78wqAtA3ONgAls9dHJZiEhmnA0FTrE78'
-        }
-    });
-
-    const data = await response.json();
-
-    hideSpinner();
-    return data;
-    
+    return fetchAPIData(`search/${global.search.type}?query=${global.search.term}&page=${global.search.page}`);
 };
 
 const showSpinner = () => {
