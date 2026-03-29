@@ -7,7 +7,7 @@
 }
 
 :root {
-  --color-primary: #020d18;
+  --color-primary: #1a042e;
   --color-secondary: #f1c40f;
 }
 
@@ -87,7 +87,7 @@ ul {
 
 .main-header {
   padding: 20px 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(24, 3, 35, 0.8);
 }
 
 .main-header .logo {

@@ -1,11 +1,18 @@
+<div style="text-align: center;">
+    <img width="800"  alt="Screenshot of Film API project" src="images/film-screenshot.png">
+</div>
+
 # Film API Explorer
 This is a vanilla JavaScript web app that uses The Movie Database (TMDB) API to browse popular movies and TV shows. You will be able to view detailed information about each movie or TV show and also search for titles.
+
+## Live Demo
+[View Site](https://warm-choux-6923cc.netlify.app/)
 
 # Technologies
 - HTML5
 - CSS3
 - Vanilla JavaScript (ES6+)
-- TMDB API
+- [TMDB API](https://www.themoviedb.org/)
 - Swiper.js
 - Netlify (deployment)
 
